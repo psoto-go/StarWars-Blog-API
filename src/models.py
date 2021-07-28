@@ -9,7 +9,7 @@ class User(db.Model):
     username = db.Column(db.String(250), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=True)
     fvcharacter = db.relationship("CharactersFavorites", backref='user', lazy=True)
     fvplanet = db.relationship("PlanetsFavorites", backref='user', lazy=True)
 

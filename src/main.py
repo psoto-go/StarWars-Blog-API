@@ -30,31 +30,32 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/user', methods=['GET'])
-def handle_hello():
-    body_request = request.get_json()
+# @app.route('/user', methods=['GET'])
+# def handle_hello():
+#     body_request = request.get_json()
 
-    name = body_request.get("name", None)
-    last_name : body_request.get("last_name", None)
-    username : body_request.get("username", None)
-    email: body_request.get("email", None)
+#     name = body_request.get("name", None)
+#     last_name : body_request.get("last_name", None)
+#     username : body_request.get("username", None)
+#     email: body_request.get("email", None)
 
-    response_body = {
-        "msg": "Hello, this is your GET /user response "
-    }
+#     response_body = {
+#         "msg": "Hello, this is your GET /user response "
+#     }
 
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 @app.route('/user', methods=['POST'])
 def handle_hello1():
     body_request = request.get_json()
 
     name = body_request.get("name", None)
-    last_name : body_request.get("last_name", None)
-    username : body_request.get("username", None)
-    email: body_request.get("email", None)
+    last_name = body_request.get("last_name", None)
+    username = body_request.get("username", None)
+    email= body_request.get("email", None)
+    password= body_request.get("password", None)
 
-    user1 = User(name=name, last_name=last_name, username=username, email = email)
+    user1 = User(name=name, last_name=last_name, username=username, email = email, password=password)
     db.session.add(user1)
     db.session.commit()
 
