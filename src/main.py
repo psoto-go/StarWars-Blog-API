@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, Characters
+from models import db, User, Characters, Planets
 #from models import Person
 
 app = Flask(__name__)
@@ -47,6 +47,8 @@ def handle_hello1():
     username = body_request.get("username", None)
     email= body_request.get("email", None)
     password= body_request.get("password", None)
+    # fvcharacter = body_request.get("fvcharacter", None)
+    # fvplanet = body_request.get("fvplanet", None)
 
     user1 = User(name=name, last_name=last_name, username=username, email = email, password=password)
     db.session.add(user1)
@@ -82,6 +84,46 @@ def peolpeget():
     # for x in req:
     #     response.append(x.serialize())
     return jsonify({"response" : list(map(lambda x:x.serialize(), req))}), 200
+
+@app.route('/people/<int:people_id>', methods=['GET'])
+def peopleid(people_id):
+    body = request.get_json()
+    cha = Characters.query.get(people_id)
+    return jsonify(cha.serialize()), 200
+
+@app.route('/planets', methods=['POST'])
+def planets():
+    body_request = request.get_json()
+
+    name = body_request.get("name", None)
+    rotation_period = body_request.get("rotation_period", None)
+    orbital_period = body_request.get("orbital_period", None)
+    diameter= body_request.get("diameter", None)
+    gravity= body_request.get("gravity", None)
+    population= body_request.get("population", None)
+
+
+    Newpla = Planets(name=name, rotation_period=rotation_period, orbital_period=orbital_period, diameter = diameter, gravity=gravity, population=population)
+    db.session.add(Newpla)
+    db.session.commit()
+
+
+    return jsonify({"msg":  "Character creado exitosamente"}), 200
+
+@app.route('/planets', methods=['GET'])
+def plaget():
+    req = Planets.query.all()
+    response = []
+    # for x in req:
+    #     response.append(x.serialize())
+    return jsonify({"response" : list(map(lambda x:x.serialize(), req))}), 200
+
+@app.route('/planets/<int:planets_id>', methods=['GET'])
+def planetsid(planets_id):
+    body = request.get_json()
+    cha = Planets.query.get(planets_id)
+    return jsonify(cha.serialize()), 200
+
 
 
 # this only runs if `$ python src/main.py` is executed
