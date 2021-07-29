@@ -64,7 +64,7 @@ class Characters(db.Model):
     fvcharacter = db.relationship("CharactersFavorites", backref='characters', lazy=True)
 
     def __repr__(self):
-        return '<Characters %r>' % self.name 
+        return '<Characters %r>' % self.name
 
     def serialize(self):
         return {
@@ -74,7 +74,8 @@ class Characters(db.Model):
             "mass": self.mass,
             "hair_color": self.hair_color,
             "skin_color": self.skin_color,
-            "birth_year": self.birth_year
+            "birth_year": self.birth_year,
+            "fvcharacter": list(map(lambda x: x.serialize(), self.fvcharacter))
             # do not serialize the password, its a security breach
         }
 

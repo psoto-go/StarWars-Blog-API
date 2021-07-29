@@ -56,6 +56,27 @@ def handle_hello1():
     return jsonify({"msg":  "Usuario creado exitosamente"}), 200
 
 
+@app.route('/people', methods=['POST'])
+def people():
+    body_request = request.get_json()
+
+    name = body_request.get("name", None)
+    height = body_request.get("height", None)
+    mass = body_request.get("mass", None)
+    hair_color= body_request.get("hair_color", None)
+    skin_color= body_request.get("skin_color", None)
+    birth_year= body_request.get("birth_year", None)
+    fvcharacter= body_request.get("fvcharacter", None)
+
+
+    Newcha = Characters(name=name, height=height, mass=mass, hair_color = hair_color, skin_color=skin_color, birth_year=birth_year, fvcharacter=fvcharacter)
+    db.session.add(Newcha)
+    db.session.commit()
+
+
+    return jsonify({"msg":  "Character creado exitosamente"}), 200
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
