@@ -195,17 +195,14 @@ def planetsidfav(planet_id):
 
 @app.route('/favorite/people/<int:people_id>', methods=['GET'])
 def peoplesidfav(people_id):
-    body = request.get_json()
-    cha = Characters.query.get(people_id)
+    cha = Favorites.query.filter_by(id=people_id).first()
     return jsonify(cha.serialize()), 200
 
 @app.route('/favorite/people/<int:people_id>', methods=['DELETE'])
 def peoplesidfavdelete(people_id):
-    people = Favorites.query.get(character_id)
-    print(character_id)
-    db.session.delete(people)
+    people = Favorites.query.filter_by(character_id=people_id).delete()
     db.session.commit()
-    return jsonify(people.serialize()), 200
+    return jsonify({"Borrado": people}), 200
 
 
 # this only runs if `$ python src/main.py` is executed
