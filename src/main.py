@@ -204,6 +204,12 @@ def peoplesidfavdelete(people_id):
     db.session.commit()
     return jsonify({"Borrado": people}), 200
 
+@app.route('/favorite/planet/<int:planet_id>', methods=['DELETE'])
+def peoplesidfavdeletee(planet_id):
+    people = Favorites.query.filter_by(planet_id=planet_id).delete()
+    db.session.commit()
+    return jsonify({"Borrado": people}), 200
+
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
